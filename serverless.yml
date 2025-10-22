@@ -1,0 +1,63 @@
+# serverless.yml
+service: taxdown-customer-api
+frameworkVersion: '4'
+
+build:
+  esbuild: false
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-2
+  environment:
+    CUSTOMER_TABLE: ${self:service}-customers-${opt:stage, 'dev'}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:Scan
+      Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.CUSTOMER_TABLE}
+
+functions:
+  api:
+    handler: dist/bundle.handler
+    events:
+      - http:
+          path: customers
+          method: get
+      - http:
+          path: customers
+          method: post
+      - http:
+          path: customers/{id}
+          method: get
+      - http:
+          path: customers/{id}
+          method: put
+      - http:
+          path: customers/{id}
+          method: delete
+      - http:
+          path: customers/{id}/add-credit
+          method: post
+
+resources:
+  Resources:
+    CustomerTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.CUSTOMER_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
