@@ -23,24 +23,24 @@ functions:
   api:
     handler: src/index.handler
     events:
-    - http:
-      path: "api/v1/${opt:stage, 'dev'}/customers"
-      method: get
-    - http:
-      path: "api/v1/${opt:stage, 'dev'}/customers"
-      method: post
-    - http:
-      path: "api/v1/${opt:stage, 'dev'}/customers/{id}"
-      method: get
-    - http:
-      path: "api/v1/${opt:stage, 'dev'}/customers/{id}"
-      method: put
-    - http:
-      path: "api/v1/${opt:stage, 'dev'}/customers/{id}"
-      method: delete
-    - http:
-      path: "api/v1/${opt:stage, 'dev'}/customers/{id}/add-credit"
-      method: post
+      - http:
+          path: "api/v1/customers"
+          method: get
+      - http:
+          path: "api/v1/customers"
+          method: post
+      - http:
+          path: "api/v1/customers/{id}"
+          method: get
+      - http:
+          path: "api/v1/customers/{id}"
+          method: put
+      - http:
+          path: "api/v1/customers/{id}"
+          method: delete
+      - http:
+          path: "api/v1/customers/{id}/add-credit"
+          method: post
 
 resources:
   Resources:

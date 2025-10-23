@@ -119,9 +119,9 @@ Guiding principles:
 
 - API Gateway (offline): <http://localhost:3000>
 - Stage prefix (by default): `/dev`
-- Route prefix: `/api/v1/<stage>`
+- Route prefix: `/api/v1/`
 
-Effective base: `http://localhost:3000/dev/api/v1/dev`
+Effective base: `http://localhost:3000/dev/api/v1`
 
 ---
 
@@ -153,7 +153,7 @@ Entity shape (Customer):
 Example:
 
 ```bash
-curl -s -X POST http://localhost:3000/dev/api/v1/dev/customers \
+curl -s -X POST http://localhost:3000/dev/api/v1/customers \
   -H "Content-Type: application/json" \
   -d '{"name":"Jane Rider","email":"jane@example.com"}' | jq
 ```
@@ -163,7 +163,7 @@ curl -s -X POST http://localhost:3000/dev/api/v1/dev/customers \
 - GET `/customers/{id}`
 
 ```bash
-curl -s http://localhost:3000/dev/api/v1/dev/customers/<id> | jq
+curl -s http://localhost:3000/dev/api/v1/customers/<id> | jq
 ```
 
 ### 3) Update customer
@@ -178,7 +178,7 @@ curl -s http://localhost:3000/dev/api/v1/dev/customers/<id> | jq
 Example:
 
 ```bash
-curl -s -X PUT http://localhost:3000/dev/api/v1/dev/customers/<id> \
+curl -s -X PUT http://localhost:3000/dev/api/v1/customers/<id> \
   -H "Content-Type: application/json" \
   -d '{"name":"Jane R."}' | jq
 ```
@@ -188,7 +188,7 @@ curl -s -X PUT http://localhost:3000/dev/api/v1/dev/customers/<id> \
 - DELETE `/customers/{id}`
 
 ```bash
-curl -i -X DELETE http://localhost:3000/dev/api/v1/dev/customers/<id>
+curl -i -X DELETE http://localhost:3000/dev/api/v1/customers/<id>
 ```
 
 ### 5) Add available credit
@@ -203,7 +203,7 @@ curl -i -X DELETE http://localhost:3000/dev/api/v1/dev/customers/<id>
 Example:
 
 ```bash
-curl -s -X POST http://localhost:3000/dev/api/v1/dev/customers/<id>/add-credit \
+curl -s -X POST http://localhost:3000/dev/api/v1/customers/<id>/add-credit \
   -H "Content-Type: application/json" \
   -d '{"amount":200}' | jq
 ```
@@ -214,7 +214,7 @@ curl -s -X POST http://localhost:3000/dev/api/v1/dev/customers/<id>/add-credit \
 - Query: `?sortByCredit=true` to sort by `availableCredit` desc
 
 ```bash
-curl -s "http://localhost:3000/dev/api/v1/dev/customers?sortByCredit=true" | jq
+curl -s "http://localhost:3000/dev/api/v1/customers?sortByCredit=true" | jq
 ```
 
 ---
@@ -242,7 +242,6 @@ curl -s "http://localhost:3000/dev/api/v1/dev/customers?sortByCredit=true" | jq
   - Resources: DynamoDB table (provisioned by CloudFormation in AWS)
   - Plugins: `serverless-webpack`, `serverless-offline`
 
-- `webpack.config.js`: bundles TypeScript for Node target
 - `tsconfig.json`: ES2020, strict mode, commonjs modules
 
 ---
