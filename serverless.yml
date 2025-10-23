@@ -2,8 +2,6 @@
 service: taxdown-customer-api
 frameworkVersion: '4'
 
-build:
-  esbuild: false
 
 provider:
   name: aws
@@ -23,7 +21,7 @@ provider:
 
 functions:
   api:
-    handler: dist/bundle.handler
+    handler: src/index.handler
     events:
       - http:
           path: customers
