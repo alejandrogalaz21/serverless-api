@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { createDynamoDocumentClient } from './infrastructure/config/dynamoClient';
+import { createDynamoDocumentClient, ensureTableExists } from './infrastructure/config/dynamoClient';
 import { DynamoCustomerRepository } from './infrastructure/repositories/DynamoCustomerRepository';
 import { CustomerController } from './infrastructure/http/CustomerController';
 import { CreateCustomer } from './application/use-cases/CreateCustomer';
@@ -26,5 +26,9 @@ const controller = new CustomerController(
  * Routes API Gateway events to the CustomerController.
  */
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  // Ensure local table exists when running offline
+  if (process.env.CUSTOMER_TABLE) {
+    await ensureTableExists(process.env.CUSTOMER_TABLE);
+  }
   return controller.handle(event);
 };
