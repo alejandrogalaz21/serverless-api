@@ -23,24 +23,24 @@ functions:
   api:
     handler: src/index.handler
     events:
-      - http:
-          path: customers
-          method: get
-      - http:
-          path: customers
-          method: post
-      - http:
-          path: customers/{id}
-          method: get
-      - http:
-          path: customers/{id}
-          method: put
-      - http:
-          path: customers/{id}
-          method: delete
-      - http:
-          path: customers/{id}/add-credit
-          method: post
+    - http:
+      path: "api/v1/${opt:stage, 'dev'}/customers"
+      method: get
+    - http:
+      path: "api/v1/${opt:stage, 'dev'}/customers"
+      method: post
+    - http:
+      path: "api/v1/${opt:stage, 'dev'}/customers/{id}"
+      method: get
+    - http:
+      path: "api/v1/${opt:stage, 'dev'}/customers/{id}"
+      method: put
+    - http:
+      path: "api/v1/${opt:stage, 'dev'}/customers/{id}"
+      method: delete
+    - http:
+      path: "api/v1/${opt:stage, 'dev'}/customers/{id}/add-credit"
+      method: post
 
 resources:
   Resources:
@@ -57,5 +57,4 @@ resources:
         BillingMode: PAY_PER_REQUEST
 
 plugins:
-  - serverless-webpack
   - serverless-offline

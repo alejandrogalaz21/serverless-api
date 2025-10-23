@@ -1,56 +1,278 @@
-# TaxDown Customer API
+# TaxDown Customer API 🏍️💳
 
-This is a REST API for customer management in an online motorcycle shop, built with Node.js, TypeScript, and Serverless Framework. It supports CRUD operations for customers, adding available credit, and listing customers sorted by credit. The project follows best practices like SOLID principles, Domain-Driven Design (DDD), and Hexagonal Architecture for maintainability, testability, and scalability.
+A Serverless REST API built with TypeScript that manages Customers for an online motorbike shop. It supports full CRUD, adding available credit, and listing customers sorted by available credit. Designed with SOLID principles, Domain-Driven Design (DDD), and Hexagonal Architecture for clean, testable code.
 
-## Architecture Overview
+- Runtime: AWS Lambda (Node.js 20) + API Gateway
+- Storage: DynamoDB (Local via Docker for development, AWS in production)
+- Build: TypeScript
+- Local Dev: serverless-offline + DynamoDB Local (Docker)
 
-The API is structured using **Hexagonal Architecture** (also known as Ports and Adapters), which separates business logic from external concerns like databases and frameworks. This ensures the core domain is independent and easy to test or modify.
+---
 
-### Key Principles and Layers
-- **SOLID Principles**: Applied throughout for clean, modular code.
-  - **Single Responsibility**: Each class has one job (e.g., `CustomerService` handles validation and credit logic).
-  - **Open-Closed**: Code is extensible without modification (e.g., repositories can be swapped).
-  - **Liskov Substitution**: Interfaces ensure interchangeable implementations.
-  - **Interface Segregation**: Small, focused interfaces (e.g., `ICustomerRepository`).
-  - **Dependency Inversion**: High-level modules depend on abstractions, not concretions.
+## ✅ Requirements
 
-- **Domain-Driven Design (DDD)**: Focuses on the business domain.
-  - **Entities**: Core business objects (e.g., `Customer` with attributes like `id`, `name`, `email`, `availableCredit`).
-  - **Services**: Pure business logic (e.g., `CustomerService` for validation and credit addition).
-  - No external dependencies in this layer.
+- Node.js 18+ (tested with v20)
+- npm 8+
+- Docker Desktop (for DynamoDB Local and Admin UI)
+- Serverless Framework v4 (global or npx)
+- AWS credentials (only required for deploy)
 
-- **Hexagonal Architecture Layers**:
-  - **Domain Layer** (`src/domain/`): Contains entities and services. This is the core business logic, independent of frameworks or databases.
-  - **Application Layer** (`src/application/useCases/`): Contains use cases that orchestrate domain logic (e.g., `CreateCustomer`, `ListCustomers`). Acts as the application's entry point for business operations.
-  - **Infrastructure Layer** (`src/infrastructure/`): Handles external concerns like databases (e.g., `DynamoCustomerRepository`), controllers (e.g., `CustomerController` for HTTP handling), and configurations. Adapters connect to the outside world (e.g., DynamoDB, API Gateway).
+Optional environment variables:
 
-- **Additional Practices**:
-  - **Dependency Injection**: Use cases and controllers receive dependencies (e.g., repositories) via constructors for testability.
-  - **Error Handling**: Centralized in controllers with appropriate HTTP status codes.
-  - **Testing**: Unit tests for domain logic; integration tests for endpoints.
-  - **Serverless**: Uses AWS Lambda, API Gateway, and DynamoDB for scalability. Local development with `serverless-offline`.
+- `CUSTOMER_TABLE` — defaults to `taxdown-customer-api-customers-dev` (see `serverless.yml`)
+- `DYNAMODB_ENDPOINT` — override DynamoDB endpoint (defaults to `<http://localhost:8000>` when offline)
 
-### Project Structure
+---
+
+## 🧭 Architecture (SOLID • DDD • Hexagonal)
+
+This project embraces Hexagonal Architecture (Ports & Adapters) to keep business logic independent of frameworks or databases.
+
+- Domain (Core): entities, errors, and business rules — no external deps
+- Application (Use Cases): orchestrate domain logic, express intents
+- Infrastructure (Adapters): repositories (DynamoDB), controllers (API Gateway), config
+
+Guiding principles:
+
+- SOLID: SRP, OCP, LSP, ISP, DIP
+- DDD: Ubiquitous language (Customer, available credit), clear boundaries
+- Hexagonal: Ports (interfaces) and Adapters (implementations)
+
+---
+
+## 📁 Project Structure
+
+```text
+./
+├─ src/
+│  ├─ domain/                      # Core business layer
+│  │  ├─ Customer.ts               # Customer entity with behavior (update, addCredit)
+│  │  ├─ CustomerRepository.ts     # Port: ICustomerRepository
+│  │  └─ errors/DomainError.ts     # DomainError, NotFoundError, ValidationError
+│  ├─ application/
+│  │  └─ use-cases/                # Application services (intents)
+│  │     ├─ CreateCustomer.ts
+│  │     ├─ GetCustomer.ts
+│  │     ├─ UpdateCustomer.ts
+│  │     ├─ DeleteCustomer.ts
+│  │     ├─ AddCredit.ts
+│  │     └─ ListCustomers.ts
+│  ├─ infrastructure/
+│  │  ├─ config/dynamoClient.ts    # Dynamo clients + ensureTableExists (local only)
+│  │  ├─ repositories/
+│  │  │  ├─ DynamoCustomerRepository.ts  # Adapter: DynamoDB implementation
+│  │  │  └─ InMemoryCustomerRepository.ts# Adapter: for tests
+│  │  └─ http/
+│  │     ├─ HttpResponse.ts        # JSON/204 helpers
+│  │     └─ CustomerController.ts  # Maps HTTP -> use-cases, error handling
+│  └─ index.ts                     # Lambda handler wiring (DI)
+├─ tests/
+│  └─ create-and-credit.test.ts    # Sample use-case test with in-memory repo
+├─ docker-compose.yml              # DynamoDB Local + Admin UI
+├─ serverless.yml                  # Functions, IAM, resources (DynamoDB table)
+├─ tsconfig.json                   # TS config
+├─ webpack.config.js               # Webpack bundling
+├─ jest.config.js                  # Jest with ts-jest
+└─ package.json                    # Scripts and deps
 ```
-taxdown-customer-api/
-├── src/
-│   ├── domain/            # Business logic (entities, services)
-│   ├── application/       # Use cases (application logic)
-│   ├── infrastructure/    # Adapters (repositories, controllers)
-│   └── index.ts           # Lambda handler
-├── tests/                 # Unit and integration tests
-├── serverless.yml         # Serverless configuration
-├── package.json           # Dependencies and scripts
-├── tsconfig.json          # TypeScript config
-├── jest.config.js        # Testing config
-└── README.md              # This file
+
+> All code is in English and uses JSDoc-style comments for public APIs and domain logic.
+
+---
+
+## 🚀 Running Locally
+
+1. Start DynamoDB Local + Admin UI (Docker):
+
+   ```bash
+   docker compose up -d
+   ```
+
+   - DynamoDB Local: <http://localhost:8000>
+   - Admin UI: <http://localhost:8001>
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+1. Start the API with Serverless Offline:
+
+   ```bash
+   npm run start
+   ```
+
+   Notes:
+   - When running offline, the app connects to `<http://localhost:8000>` automatically (`IS_OFFLINE=true`).
+   - The API auto-creates the local table on first request if missing (no need to pre-provision locally).
+
+1. Run tests (optional):
+
+   ```bash
+   npm test
+   ```
+
+---
+
+## 🌐 Base URL (local)
+
+- API Gateway (offline): <http://localhost:3000>
+- Stage prefix (by default): `/dev`
+- Route prefix: `/api/v1/<stage>`
+
+Effective base: `http://localhost:3000/dev/api/v1/dev`
+
+---
+
+## 📚 API Reference & Examples
+
+Entity shape (Customer):
+
+```json
+{
+  "id": "uuid",
+  "name": "string",
+  "email": "string",
+  "phone": "string | null",
+  "availableCredit": 0,
+  "createdAt": "ISO-8601",
+  "updatedAt": "ISO-8601"
+}
 ```
 
-## Requirements
-- Node.js 18+ (tested with v20.19.0)
-- npm 8+ (tested with 10.8.2)
-- AWS CLI configured (for deployment)
-- Serverless Framework 4+ (installed globally or locally)
+### 1) Create customer
 
-## Installation
-1. Clone or download the project:
+- POST `/customers`
+- Body:
+
+```json
+{ "name": "Jane Rider", "email": "jane@example.com", "phone": "+34 600 000 000" }
+```
+
+Example:
+
+```bash
+curl -s -X POST http://localhost:3000/dev/api/v1/dev/customers \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Jane Rider","email":"jane@example.com"}' | jq
+```
+
+### 2) Get customer by id
+
+- GET `/customers/{id}`
+
+```bash
+curl -s http://localhost:3000/dev/api/v1/dev/customers/<id> | jq
+```
+
+### 3) Update customer
+
+- PUT `/customers/{id}`
+- Body (partial):
+
+```json
+{ "name": "Jane R.", "email": "jane.r@example.com", "phone": "+44 7700 900123" }
+```
+
+Example:
+
+```bash
+curl -s -X PUT http://localhost:3000/dev/api/v1/dev/customers/<id> \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Jane R."}' | jq
+```
+
+### 4) Delete customer
+
+- DELETE `/customers/{id}`
+
+```bash
+curl -i -X DELETE http://localhost:3000/dev/api/v1/dev/customers/<id>
+```
+
+### 5) Add available credit
+
+- POST `/customers/{id}/add-credit`
+- Body:
+
+```json
+{ "amount": 200 }
+```
+
+Example:
+
+```bash
+curl -s -X POST http://localhost:3000/dev/api/v1/dev/customers/<id>/add-credit \
+  -H "Content-Type: application/json" \
+  -d '{"amount":200}' | jq
+```
+
+### 6) List customers (optionally sorted by credit)
+
+- GET `/customers`
+- Query: `?sortByCredit=true` to sort by `availableCredit` desc
+
+```bash
+curl -s "http://localhost:3000/dev/api/v1/dev/customers?sortByCredit=true" | jq
+```
+
+---
+
+## 🧩 Design Details
+
+- Validation: basic checks for required fields and email format; credit amount must be positive
+- Sorting: performed in application layer after `Scan` — for large datasets, consider a GSI on `availableCredit`
+- Error handling: domain errors mapped to HTTP status codes
+  - 400 ValidationError
+  - 404 NotFoundError
+  - 422 DomainError (generic domain issues)
+  - 500 Unhandled/unknown
+- Dependency Injection: handler wires repository and use-cases; easy to swap implementations
+- JSDoc: used across domain/use-cases for maintainability and better IDE help
+
+---
+
+## 🔧 Configuration
+
+- `serverless.yml`
+  - Function: `api` -> `src/index.handler`
+  - Environment: `CUSTOMER_TABLE = ${service}-customers-${stage}`
+  - IAM: minimal DynamoDB access (Get/Put/Update/Delete/Scan) for the table
+  - Resources: DynamoDB table (provisioned by CloudFormation in AWS)
+  - Plugins: `serverless-webpack`, `serverless-offline`
+
+- `webpack.config.js`: bundles TypeScript for Node target
+- `tsconfig.json`: ES2020, strict mode, commonjs modules
+
+---
+
+## 🧪 Testing
+
+- Unit tests with Jest + ts-jest
+- In-memory repository to avoid AWS dependencies in tests
+
+```bash
+npm test
+```
+
+---
+
+## 📦 Deployment (optional)
+
+Requires AWS credentials configured (e.g., via `aws configure`).
+
+```bash
+npm run deploy
+```
+
+This deploys the stack (Lambda, API Gateway, DynamoDB table) to the configured AWS account/region.
+
+---
+
+## 👤 Author & Notes
+
+- Built for an evaluation focusing on SOLID, API Design, DDD, and Hexagonal Architecture
+- Feedback and improvements are welcome
+
+---
