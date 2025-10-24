@@ -32,5 +32,5 @@ jobs:
         env:
           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
         run: |
-          npx serverless create-domain
+          npx serverless create_domain
           npx serverless deploy --stage prod

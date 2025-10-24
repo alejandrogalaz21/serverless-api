@@ -115,13 +115,15 @@ Guiding principles:
 
 ---
 
-## 🌐 Base URL (local)
+## 🌐 Base URLs
 
-- API Gateway (offline): <http://localhost:3000>
-- Stage prefix (by default): `/dev`
-- Route prefix: `/api/v1/`
+- Production (custom domain): `https://taxdown.alejandrogalaz.site/api/v1`
+- Local (offline): `http://localhost:3000/dev/api/v1`
 
-Effective base: `http://localhost:3000/dev/api/v1`
+Notes:
+
+- The custom domain maps directly to the stage, so no `/prod` path is needed. Routes are served from the root, e.g. `/api/v1/customers`.
+- For local development, the stage prefix `/dev` is included by Serverless Offline.
 
 ---
 
@@ -150,10 +152,18 @@ Entity shape (Customer):
 { "name": "Jane Rider", "email": "jane@example.com", "phone": "+34 600 000 000" }
 ```
 
-Example:
+Example (local):
 
 ```bash
 curl -s -X POST http://localhost:3000/dev/api/v1/customers \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Jane Rider","email":"jane@example.com"}' | jq
+```
+
+Example (production):
+
+```bash
+curl -s -X POST https://taxdown.alejandrogalaz.site/api/v1/customers \
   -H "Content-Type: application/json" \
   -d '{"name":"Jane Rider","email":"jane@example.com"}' | jq
 ```
@@ -163,7 +173,11 @@ curl -s -X POST http://localhost:3000/dev/api/v1/customers \
 - GET `/customers/{id}`
 
 ```bash
+# Local
 curl -s http://localhost:3000/dev/api/v1/customers/<id> | jq
+
+# Production
+curl -s https://taxdown.alejandrogalaz.site/api/v1/customers/<id> | jq
 ```
 
 ### 3) Update customer
@@ -178,7 +192,13 @@ curl -s http://localhost:3000/dev/api/v1/customers/<id> | jq
 Example:
 
 ```bash
+# Local
 curl -s -X PUT http://localhost:3000/dev/api/v1/customers/<id> \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Jane R."}' | jq
+
+# Production
+curl -s -X PUT https://taxdown.alejandrogalaz.site/api/v1/customers/<id> \
   -H "Content-Type: application/json" \
   -d '{"name":"Jane R."}' | jq
 ```
@@ -188,7 +208,11 @@ curl -s -X PUT http://localhost:3000/dev/api/v1/customers/<id> \
 - DELETE `/customers/{id}`
 
 ```bash
+# Local
 curl -i -X DELETE http://localhost:3000/dev/api/v1/customers/<id>
+
+# Production
+curl -i -X DELETE https://taxdown.alejandrogalaz.site/api/v1/customers/<id>
 ```
 
 ### 5) Add available credit
@@ -203,7 +227,13 @@ curl -i -X DELETE http://localhost:3000/dev/api/v1/customers/<id>
 Example:
 
 ```bash
+# Local
 curl -s -X POST http://localhost:3000/dev/api/v1/customers/<id>/add-credit \
+  -H "Content-Type: application/json" \
+  -d '{"amount":200}' | jq
+
+# Production
+curl -s -X POST https://taxdown.alejandrogalaz.site/api/v1/customers/<id>/add-credit \
   -H "Content-Type: application/json" \
   -d '{"amount":200}' | jq
 ```
@@ -214,21 +244,26 @@ curl -s -X POST http://localhost:3000/dev/api/v1/customers/<id>/add-credit \
 - Query: `?sortByCredit=true` to sort by `availableCredit` desc
 
 ```bash
+# Local
 curl -s "http://localhost:3000/dev/api/v1/customers?sortByCredit=true" | jq
+
+# Production
+curl -s "https://taxdown.alejandrogalaz.site/api/v1/customers?sortByCredit=true" | jq
 ```
 
 ---
 
 ## 📖 Live API Docs (GitHub Pages)
 
-- URL: https://alejandrogalaz21.github.io/serverless-api/ 🔗
+- URL: <https://alejandrogalaz21.github.io/serverless-api/> 🔗
 - What it is: A static Swagger UI that loads the OpenAPI spec from this repo and lets you try endpoints directly in the browser.
 - How to use:
   1) Open the URL above.
-  2) Use the Servers dropdown in the top-right:
-     - Local: select http://localhost:3000/dev (run `npm run start` locally) 🖥️
-     - AWS: paste your API Invoke URL or update `docs/openapi.yaml` replacing `YOUR_API_ID` and `stage` (e.g., dev/prod) ☁️
-  3) Click “Try it out”, fill the payload, then “Execute” ▶️
+  1) Use the Servers dropdown in the top-right:
+  - Production: <https://taxdown.alejandrogalaz.site> ☁️
+  - Local: <http://localhost:3000/dev> (run `npm run start`) 🖥️
+  - AWS API ID: <https://YOUR_API_ID.execute-api.us-west-2.amazonaws.com/{stage}>
+  1) Click “Try it out”, fill the payload, then “Execute” ▶️
 - Notes:
   - CORS is enabled in `serverless.yml` for all routes ✅
   - GitHub Pages is static and only forwards requests from your browser to your API; no secrets are stored there 🔒
