@@ -6,7 +6,7 @@ frameworkVersion: '4'
 provider:
   name: aws
   runtime: nodejs20.x
-  region: us-east-2
+  region: us-west-2
   stage: ${opt:stage, 'dev'} # default stage
   environment:
     CUSTOMER_TABLE: ${self:service}-customers-${opt:stage, 'dev'}

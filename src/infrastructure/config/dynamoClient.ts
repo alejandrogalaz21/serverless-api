@@ -10,7 +10,7 @@ export function createDynamoDocumentClient() {
   const endpoint = process.env.DYNAMODB_ENDPOINT || (isOffline ? 'http://localhost:8000' : undefined);
 
   const client = new DynamoDBClient({
-    region: process.env.AWS_REGION || process.env.AWS_DEFAULT_REGION || 'us-east-2',
+    region: process.env.AWS_REGION || process.env.AWS_DEFAULT_REGION || 'us-west-2',
     endpoint,
     credentials: endpoint
       ? { accessKeyId: 'local', secretAccessKey: 'local' } // required by SDK for local
@@ -31,7 +31,7 @@ export async function ensureTableExists(tableName: string): Promise<void> {
   if (!endpoint) return; // don't attempt on AWS
 
   const client = new DynamoDBClient({
-    region: process.env.AWS_REGION || process.env.AWS_DEFAULT_REGION || 'us-east-2',
+    region: process.env.AWS_REGION || process.env.AWS_DEFAULT_REGION || 'us-west-2',
     endpoint,
     credentials: { accessKeyId: 'local', secretAccessKey: 'local' },
   });
