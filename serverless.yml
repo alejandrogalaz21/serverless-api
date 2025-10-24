@@ -72,6 +72,6 @@ custom:
     domainName: taxdown.alejandrogalaz.site
     basePath: ''
     stage: ${self:provider.stage}
-    certificateName: "*.alejandrogalaz.site"
+    certificateArn: arn:aws:acm:us-west-2:330134632981:certificate/93e4ef56-2781-4ec2-870c-7d34d8ae1e39
     createRoute53Record: true
     endpointType: "REGIONAL"
