@@ -74,3 +74,4 @@ custom:
     stage: ${self:provider.stage}
     certificateName: "*.alejandrogalaz.site"
     createRoute53Record: true
+    endpointType: "REGIONAL"
