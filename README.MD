@@ -67,6 +67,60 @@ Guiding principles:
 - DDD: Ubiquitous language (Customer, available credit), clear boundaries
 - Hexagonal: Ports (interfaces) and Adapters (implementations)
 
+### End-to-end flow (API Gateway ➜ Lambda ➜ Layers)
+
+```mermaid
+flowchart LR
+  U[User / Client]
+
+  subgraph Edge[Edge]
+    APIGW[API Gateway<br>Custom Domain<br>https://taxdown.alejandrogalaz.site]
+  end
+
+  subgraph LambdaFn[Lambda]
+    HANDLER[src/index.handler]
+    CTRL[CustomerController<br>infrastructure/http]
+  end
+
+  subgraph App[Application Layer]
+    UC[Use Cases<br>Create / Get / Update / Delete / AddCredit / List]
+  end
+
+  subgraph Domain[Domain Layer]
+    ENT[Entities + Domain Errors]
+    PORT[CustomerRepository Port]
+  end
+
+  subgraph Infra[Infrastructure Layer]
+    ADAPT[DynamoCustomerRepository Adapter]
+  end
+
+  subgraph Data[Data Store]
+    DDB["DynamoDB Table<br>taxdown-customers-prod"]
+  end
+
+  %% Main flow
+  U -->|HTTP JSON| APIGW -->|Invoke| HANDLER --> CTRL --> UC --> PORT
+  PORT -->|Impl| ADAPT -->|Get / Put / Update / Scan| DDB
+  ADAPT --> PORT --> UC --> CTRL -->|HttpResponse| HANDLER --> APIGW -->|HTTP Response| U
+
+  %% Local development path (dashed)
+  classDef dashed stroke-dasharray: 5 5
+  OFFLINE[serverless-offline]:::dashed
+  DDBLocal["DynamoDB Local"]:::dashed
+  APIGW -. use -.-> OFFLINE
+  DDB -. alt -.-> DDBLocal
+
+```
+
+Notes:
+
+- Presentation: API Gateway + Lambda handler call the controller, which maps HTTP to use-cases and handles errors.
+- Application: Use-cases orchestrate domain behavior without knowing persistence details.
+- Domain: Entities, value objects, and domain errors; the `CustomerRepository` is a port.
+- Infrastructure: `DynamoCustomerRepository` implements the port and talks to DynamoDB.
+- Local development: Serverless Offline emulates API Gateway + Lambda; DynamoDB Local replaces the AWS service.
+
 ---
 
 ## 📁 Project Structure
