@@ -1,0 +1,264 @@
+{
+  "taxdown-customer-api-customers-prod": [
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0001-4f6e-8c2a-123456789001" },
+          "name": { "S": "Alice Smith" },
+          "email": { "S": "alice.smith@example.com" },
+          "phone": { "S": "555-1111" },
+          "availableCredit": { "N": "120" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0002-4f6e-8c2a-123456789002" },
+          "name": { "S": "Bob Johnson" },
+          "email": { "S": "bob.johnson@example.com" },
+          "phone": { "S": "555-2222" },
+          "availableCredit": { "N": "300" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0003-4f6e-8c2a-123456789003" },
+          "name": { "S": "Charlie Davis" },
+          "email": { "S": "charlie.davis@example.com" },
+          "phone": { "S": "555-3333" },
+          "availableCredit": { "N": "200" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0004-4f6e-8c2a-123456789004" },
+          "name": { "S": "Diana Martinez" },
+          "email": { "S": "diana.martinez@example.com" },
+          "phone": { "S": "555-4444" },
+          "availableCredit": { "N": "450" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0005-4f6e-8c2a-123456789005" },
+          "name": { "S": "Ethan Brown" },
+          "email": { "S": "ethan.brown@example.com" },
+          "phone": { "S": "555-5555" },
+          "availableCredit": { "N": "80" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0006-4f6e-8c2a-123456789006" },
+          "name": { "S": "Fiona Wilson" },
+          "email": { "S": "fiona.wilson@example.com" },
+          "phone": { "S": "555-6666" },
+          "availableCredit": { "N": "150" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0007-4f6e-8c2a-123456789007" },
+          "name": { "S": "George Lee" },
+          "email": { "S": "george.lee@example.com" },
+          "phone": { "S": "555-7777" },
+          "availableCredit": { "N": "250" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0008-4f6e-8c2a-123456789008" },
+          "name": { "S": "Hannah Taylor" },
+          "email": { "S": "hannah.taylor@example.com" },
+          "phone": { "S": "555-8888" },
+          "availableCredit": { "N": "320" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0009-4f6e-8c2a-123456789009" },
+          "name": { "S": "Ian Thomas" },
+          "email": { "S": "ian.thomas@example.com" },
+          "phone": { "S": "555-9999" },
+          "availableCredit": { "N": "400" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0010-4f6e-8c2a-123456789010" },
+          "name": { "S": "Julia White" },
+          "email": { "S": "julia.white@example.com" },
+          "phone": { "S": "555-1010" },
+          "availableCredit": { "N": "500" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0011-4f6e-8c2a-123456789011" },
+          "name": { "S": "Kevin Harris" },
+          "email": { "S": "kevin.harris@example.com" },
+          "phone": { "S": "555-1112" },
+          "availableCredit": { "N": "220" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0012-4f6e-8c2a-123456789012" },
+          "name": { "S": "Laura Clark" },
+          "email": { "S": "laura.clark@example.com" },
+          "phone": { "S": "555-1113" },
+          "availableCredit": { "N": "330" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0013-4f6e-8c2a-123456789013" },
+          "name": { "S": "Michael Lewis" },
+          "email": { "S": "michael.lewis@example.com" },
+          "phone": { "S": "555-1114" },
+          "availableCredit": { "N": "180" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0014-4f6e-8c2a-123456789014" },
+          "name": { "S": "Natalie Young" },
+          "email": { "S": "natalie.young@example.com" },
+          "phone": { "S": "555-1115" },
+          "availableCredit": { "N": "270" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0015-4f6e-8c2a-123456789015" },
+          "name": { "S": "Oliver King" },
+          "email": { "S": "oliver.king@example.com" },
+          "phone": { "S": "555-1116" },
+          "availableCredit": { "N": "150" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0016-4f6e-8c2a-123456789016" },
+          "name": { "S": "Paula Scott" },
+          "email": { "S": "paula.scott@example.com" },
+          "phone": { "S": "555-1117" },
+          "availableCredit": { "N": "400" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0017-4f6e-8c2a-123456789017" },
+          "name": { "S": "Quentin Adams" },
+          "email": { "S": "quentin.adams@example.com" },
+          "phone": { "S": "555-1118" },
+          "availableCredit": { "N": "220" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0018-4f6e-8c2a-123456789018" },
+          "name": { "S": "Rachel Baker" },
+          "email": { "S": "rachel.baker@example.com" },
+          "phone": { "S": "555-1119" },
+          "availableCredit": { "N": "230" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0019-4f6e-8c2a-123456789019" },
+          "name": { "S": "Steven Baker" },
+          "email": { "S": "steven.baker@example.com" },
+          "phone": { "S": "555-1120" },
+          "availableCredit": { "N": "120" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": { "S": "1a2b3c4d-0020-4f6e-8c2a-123456789020" },
+          "name": { "S": "Tina Green" },
+          "email": { "S": "tina.green@example.com" },
+          "phone": { "S": "555-1121" },
+          "availableCredit": { "N": "310" },
+          "createdAt": { "S": "2025-10-23T00:00:00Z" },
+          "updatedAt": { "S": "2025-10-23T00:00:00Z" }
+        }
+      }
+    }
+  ]
+}
