@@ -219,6 +219,22 @@ curl -s "http://localhost:3000/dev/api/v1/customers?sortByCredit=true" | jq
 
 ---
 
+## 📖 Live API Docs (GitHub Pages)
+
+- URL: https://alejandrogalaz21.github.io/serverless-api/ 🔗
+- What it is: A static Swagger UI that loads the OpenAPI spec from this repo and lets you try endpoints directly in the browser.
+- How to use:
+  1) Open the URL above.
+  2) Use the Servers dropdown in the top-right:
+     - Local: select http://localhost:3000/dev (run `npm run start` locally) 🖥️
+     - AWS: paste your API Invoke URL or update `docs/openapi.yaml` replacing `YOUR_API_ID` and `stage` (e.g., dev/prod) ☁️
+  3) Click “Try it out”, fill the payload, then “Execute” ▶️
+- Notes:
+  - CORS is enabled in `serverless.yml` for all routes ✅
+  - GitHub Pages is static and only forwards requests from your browser to your API; no secrets are stored there 🔒
+
+---
+
 ## 🧩 Design Details
 
 - Validation: basic checks for required fields and email format; credit amount must be positive
@@ -262,7 +278,8 @@ npm test
 Requires AWS credentials configured (e.g., via `aws configure`).
 
 ```bash
-npm run deploy
+npm run deploy:dev
+npm run info
 ```
 
 This deploys the stack (Lambda, API Gateway, DynamoDB table) to the configured AWS account/region.

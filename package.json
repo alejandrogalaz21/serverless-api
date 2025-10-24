@@ -4,8 +4,12 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "serverless offline",
-    "deploy": "serverless deploy"
+    "start": "serverless offline --stage dev",
+    "info": "serverless info --stage dev",
+    "deploy:dev": "serverless deploy --stage dev",
+    "deploy:prod": "serverless deploy --stage prod",
+    "remove:dev": "serverless remove --stage dev",
+    "remove:prod": "serverless remove --stage prod"
   },
   "keywords": [],
   "author": "",

@@ -3,6 +3,9 @@ info:
   title: Taxdown Customer API
   version: 1.0.0
   description: API to manage customers and their credit.
+# This spec is used by Swagger UI and can be browsed on GitHub Pages:
+# https://alejandrogalaz21.github.io/serverless-api/ 📖
+# Tip: In the UI, use the Servers dropdown to switch between Local and AWS endpoints.
 servers:
   - url: https://{restApiId}.execute-api.us-east-2.amazonaws.com/{stage}
     # YOUR_API_ID = the API Gateway subdomain (e.g., abc123def) printed after deploy.
@@ -15,7 +18,7 @@ servers:
       stage:
         default: dev
   - url: http://localhost:3000/dev
-    description: Serverless Offline
+    description: Serverless Offline (local)
 paths:
   /api/v1/customers:
     get:
