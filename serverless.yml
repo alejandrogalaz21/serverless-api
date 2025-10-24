@@ -64,4 +64,13 @@ resources:
         BillingMode: PAY_PER_REQUEST
 
 plugins:
+  - serverless-domain-manager
   - serverless-offline
+
+custom:
+  customDomain:
+    domainName: taxdown.alejandrogalaz.site
+    basePath: ''
+    stage: ${self:provider.stage}
+    certificateName: "*.alejandrogalaz.site"
+    createRoute53Record: true
