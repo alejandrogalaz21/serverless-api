@@ -1,0 +1,158 @@
+openapi: 3.0.3
+info:
+  title: Taxdown Customer API
+  version: 1.0.0
+  description: API to manage customers and their credit.
+servers:
+  - url: https://{restApiId}.execute-api.us-east-2.amazonaws.com/{stage}
+    # YOUR_API_ID = the API Gateway subdomain (e.g., abc123def) printed after deploy.
+    # Get it with: `npx serverless info --verbose` or in AWS Console > API Gateway (Invoke URL).
+    # Example: https://abc123def.execute-api.us-east-2.amazonaws.com/dev
+    description: AWS API Gateway
+    variables:
+      restApiId:
+        default: YOUR_API_ID  # Replace this placeholder with your real API ID after deploying.
+      stage:
+        default: dev
+  - url: http://localhost:3000/dev
+    description: Serverless Offline
+paths:
+  /api/v1/customers:
+    get:
+      summary: List customers
+      responses:
+        '200':
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+    post:
+      summary: Create customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerInput'
+      responses:
+        '201':
+          description: Customer created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+  /api/v1/customers/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get customer by ID
+      responses:
+        '200':
+          description: Customer found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '404':
+          description: Not found
+    put:
+      summary: Update customer by ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUpdate'
+      responses:
+        '200':
+          description: Customer updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '404':
+          description: Not found
+    delete:
+      summary: Delete customer by ID
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Not found
+  /api/v1/customers/{id}/add-credit:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    post:
+      summary: Add credit to a customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [amount]
+              properties:
+                amount:
+                  type: number
+                  format: float
+                  minimum: 0
+      responses:
+        '200':
+          description: Credit added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '404':
+          description: Not found
+
+components:
+  schemas:
+    Customer:
+      type: object
+      required: [id, name, email, credit]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        credit:
+          type: number
+          format: float
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    CustomerInput:
+      type: object
+      required: [name, email]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+    CustomerUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
