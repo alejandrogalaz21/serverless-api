@@ -2,10 +2,39 @@
 
 A Serverless REST API built with TypeScript that manages Customers for an online motorbike shop. It supports full CRUD, adding available credit, and listing customers sorted by available credit. Designed with SOLID principles, Domain-Driven Design (DDD), and Hexagonal Architecture for clean, testable code.
 
+<!-- markdownlint-disable MD033 -->
+<div align="center">
+  <img src="./assets/api.gif" alt="TaxDown Customer API demo" width="860" loading="lazy" />
+  <br />
+  <em>TaxDown Customer API — demo</em>
+</div>
+  <br />
+<p align="center">
+  <a href="https://alejandrogalaz21.github.io/serverless-api/" target="_blank" rel="noreferrer">
+    <img src="https://img.shields.io/badge/Live%20Demo-121013?style=for-the-badge&logo=github&logoColor=white" alt="Live Demo" />
+  </a>
+  
+</p>
+<!-- markdownlint-enable MD033 -->
+
 - Runtime: AWS Lambda (Node.js 20) + API Gateway
 - Storage: DynamoDB (Local via Docker for development, AWS in production)
 - Build: TypeScript
 - Local Dev: serverless-offline + DynamoDB Local (Docker)
+
+---
+
+## 🛠️ Tech Stack
+
+[![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Serverless](https://img.shields.io/badge/Serverless-FD5750?style=for-the-badge&logo=serverless&logoColor=white)](https://www.serverless.com/)
+[![AWS Lambda](https://img.shields.io/badge/AWS%20Lambda-FF9900?style=for-the-badge&logo=awslambda&logoColor=white)](https://aws.amazon.com/lambda/)
+
+[![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)](https://aws.amazon.com/)
+[![DynamoDB](https://img.shields.io/badge/DynamoDB-4053D6?style=for-the-badge&logo=amazon-dynamodb&logoColor=white)](https://aws.amazon.com/dynamodb/)
+[![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)](https://jestjs.io/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
 ---
 
@@ -76,7 +105,7 @@ Guiding principles:
 └─ package.json                    # Scripts and deps
 ```
 
-> All code is in English and uses JSDoc-style comments for public APIs and domain logic.
+> All code uses JSDoc-style comments.
 
 ---
 
@@ -323,7 +352,17 @@ This deploys the stack (Lambda, API Gateway, DynamoDB table) to the configured A
 
 ## 👤 Author & Notes
 
+- Author: Alejandro Galaz
 - Built for an evaluation focusing on SOLID, API Design, DDD, and Hexagonal Architecture
 - Feedback and improvements are welcome
 
 ---
+
+### Contact
+
+[![Website](https://img.shields.io/badge/Website-alejandrogalaz.site-2ea44f?style=for-the-badge&logo=google-chrome&logoColor=white)](https://alejandrogalaz.site/)
+[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alejandrogalaz/)
+[![Github Pages](https://img.shields.io/badge/github%20pages-121013?style=for-the-badge&logo=github&logoColor=white)](https://alejandrogalaz21.github.io/serverless-api/)
+[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:alejandrogalaz21@gmail.com)
+
+
